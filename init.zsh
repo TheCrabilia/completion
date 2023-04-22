@@ -4,8 +4,9 @@
 
 [[ ${TERM} != dumb ]] && () {
     # Load and initialize the completion system
-    local zdumpfile glob_case_sensitivity completion_case_sensitivity zstats zold_dat
+    local zdumpfile zcompcache glob_case_sensitivity completion_case_sensitivity zstats zold_dat
     zstyle -s ':zim:completion' dumpfile 'zdumpfile' || zdumpfile=${ZDOTDIR:-${HOME}}/.zcompdump
+    zstyle -s ':zim:completion' compcache 'zcompcache' || zcompcache=${ZDOTDIR:-${HOME}}/.zcompcache
     zstyle -s ':zim:glob' case-sensitivity glob_case_sensitivity || glob_case_sensitivity=insensitive
     zstyle -s ':zim:completion' case-sensitivity completion_case_sensitivity || completion_case_sensitivity=insensitive
 
@@ -57,7 +58,7 @@
 
     # Enable caching
     zstyle ':completion::complete:*' use-cache on
-    zstyle ':completion:*' cache-path "$XDG_CACHE_HOME/zsh/zcompcache"
+    zstyle ':completion:*' cache-path ${zcompcache}
 
     # Group matches and describe.
     zstyle ':completion:*:*:*:*:*' menu select
